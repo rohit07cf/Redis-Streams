@@ -71,3 +71,34 @@ Retrieves a range of entries from a stream.
 Limits the size of a stream.
 - Used to cap memory usage
 - Supports trimming by max length or by entry ID
+
+## What is `BLOCK` in Redis Streams?
+
+`BLOCK` is a parameter used with `XREAD` and `XREADGROUP` that tells Redis **how long to wait** for new stream entries when the stream is empty or the consumer has already caught up.
+
+### How It Works
+- The value is specified in **milliseconds**
+- Redis holds the connection open until:
+  - New entries arrive, or
+  - The timeout expires
+
+### Common Values
+- `BLOCK 0` → Wait indefinitely (infinite block)
+- `BLOCK 1000` → Wait up to 1 second
+- No `BLOCK` → Return immediately (non-blocking)
+
+### Behavior Comparison
+
+**Non-blocking (no `BLOCK`):**
+- Checks the stream
+- If no new entries exist, returns immediately
+
+**Blocking (`BLOCK` enabled):**
+- Waits for new entries to arrive
+- Returns as soon as data is available or timeout is reached
+
+### Intuition (Mailbox Analogy)
+- **Non-blocking:** Check the mailbox → empty → walk away
+- **Blocking:** Stand by the mailbox and wait up to *X* seconds for mail to arrive
+
+`BLOCK` is commonly used to build efficient, event-driven consumers without busy polling.
