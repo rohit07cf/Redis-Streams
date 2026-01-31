@@ -16,7 +16,6 @@ This enables scalable and reliable message processing.
 
 ### Entry ID
 Each stream entry has an auto-generated ID in the format:
-
 <millisecondTimestamp>-<sequenceNumber>
 
 **Example:**
@@ -37,37 +36,38 @@ docker run -d \
   --name redis \
   -p 6379:6379 \
   redis:7
+```
 
-## Key Redis Stream Commands
+### Key Redis Stream Commands
 
-### XADD
+#### XADD
 Adds a new entry to a stream.
 - Automatically generates a unique entry ID (timestamp-based)
 - Creates the stream if it does not exist
 
-### XREAD
+#### XREAD
 Reads entries from one or more streams.
 - Used by simple consumers
 - Does not support consumer groups or acknowledgments
 
-### XREADGROUP
+#### XREADGROUP
 Reads entries as part of a consumer group.
 - Enables multiple consumers to process the same stream
 - Supports message tracking and pending entries
 - Requires explicit acknowledgment
 
-### XACK
+#### XACK
 Acknowledges that a message has been successfully processed.
 - Removes the entry from the consumer group’s pending list
 
-### XLEN
+#### XLEN
 Returns the total number of entries in a stream.
 
-### XRANGE
+#### XRANGE
 Retrieves a range of entries from a stream.
 - Can be queried by start and end entry IDs
 
-### XTRIM
+#### XTRIM
 Limits the size of a stream.
 - Used to cap memory usage
 - Supports trimming by max length or by entry ID
