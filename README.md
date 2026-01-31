@@ -102,3 +102,37 @@ Limits the size of a stream.
 - **Blocking:** Stand by the mailbox and wait up to *X* seconds for mail to arrive
 
 `BLOCK` is commonly used to build efficient, event-driven consumers without busy polling.
+
+## Redis Streams for Long-Running Agents
+
+Redis Streams can be an effective strategy for coordinating and observing **long-running agents**, especially when real-time feedback and ordered event processing are required.
+
+---
+
+## When Redis Streams Work Well for Long-Running Agents
+
+### ✅ Good Use Cases
+
+1. **Progress Updates & Intermediate Results**  
+   - Emit checkpoints, percentages, or status messages  
+   - Enable real-time UI or monitoring updates
+
+2. **Multi-Step Agent Workflows**  
+   - Publish events for each stage of execution  
+   - Allow downstream consumers to react to specific steps
+
+3. **Token Streaming from LLMs**  
+   - Stream partial tokens or chunks as they are generated  
+   - Support live response rendering and low-latency feedback
+
+---
+
+## Key Recommendations
+
+### ✅ DO Use Redis Streams For:
+- Live progress updates during agent execution  
+- Token-level or chunk-level streaming from LLMs  
+- Step-by-step notifications in multi-stage agent pipelines  
+- **Short to medium-running tasks** (typically < **30 minutes**)
+
+Redis Streams shine when you need **ordered, durable, near-real-time messaging** with lightweight infrastructure and minimal operational overhead.
